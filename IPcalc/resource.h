@@ -3,6 +3,7 @@
 // Used by Resource.rc
 //
 #define IDD_MAIN_DIALOG                 101
+#define IDD_DIALOG_SUBNETS              103
 #define IDC_STATIC_IP                   1001
 #define IDC_STATIC_MASK                 1002
 #define IDC_STATIC_PREFIX               1003
@@ -11,7 +12,9 @@
 #define IDC_STATIC_INFO                 1006
 #define IDC_EDIT_PREFIX                 1007
 #define IDC_SPIN_PREFIX                 1008
-#define IDC_LIST1                       1010
+#define IDC_BUTTON_SUBNETS              1009
+#define IDC_LIST_SUBNETS                1010
+#define IDC_STATIC_NUMBER_OF_SUBNETS    1011
 
 // Next default values for new objects
 // 
