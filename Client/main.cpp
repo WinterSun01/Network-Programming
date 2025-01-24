@@ -1,4 +1,4 @@
-#include<iostream>
+п»ї#include<iostream>
 #include<WinSock2.h>
 #include<WS2tcpip.h>
 #include<CommCtrl.h>
@@ -29,13 +29,13 @@ void main()
 	addrinfo* ptr = NULL;
 	addrinfo hInst;
 
-	//2.1. Получаем адрес текущего узла:
+	//2.1. РџРѕР»СѓС‡Р°РµРј Р°РґСЂРµСЃ С‚РµРєСѓС‰РµРіРѕ СѓР·Р»Р°:
 	ZeroMemory(&hInst, sizeof(hInst));
 	hInst.ai_family = AF_UNSPEC;
 	hInst.ai_socktype = SOCK_STREAM;
 	hInst.ai_protocol = IPPROTO_TCP;
 
-	iResult = getaddrinfo("192.168.56.1", DEFAULT_PORT, &hInst, &result);
+	iResult = getaddrinfo("192.168.0.109", DEFAULT_PORT, &hInst, &result);
 	if (iResult != 0)
 	{
 		cout << "getaddrinfo() failed with error #" << WSAGetLastError() << endl;
@@ -79,7 +79,7 @@ void main()
 	}
 
 	//4. Send & Receive data:
-	const char sendbuffer[] = "?????? Server!";
+	const char sendbuffer[] = "РџСЂРёРІРµС‚ Server!";
 	char recvbuffer[BUFFER_SIZE]{};
 
 	iResult = send(ConnectSocket, sendbuffer, strlen(sendbuffer), 0);
