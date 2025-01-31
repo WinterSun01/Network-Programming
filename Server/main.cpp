@@ -159,8 +159,8 @@ void main()
 			char message[] = "No free connections left";
 			send(extra_socket, message, sizeof(message), 0);
 			shutdown(extra_socket, SD_BOTH);
-			cout << ClientSocketData(client_socket).get_socket(sz_client_name) << "was disconnected" << endl;
 			closesocket(extra_socket);
+			cout << ClientSocketData(client_socket).get_socket(sz_client_name) << "was disconnected" << endl;
 		}
 		Sleep(100);
 	} while (true);
