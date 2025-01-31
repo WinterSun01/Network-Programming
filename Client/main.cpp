@@ -111,8 +111,7 @@ void main()
 		}
 
 		int received = 0;
-		//do
-		//{
+		
 		received = recv(ConnectSocket, recvbuffer, BUFFER_SIZE, 0);
 		if (received > 0)
 		{
@@ -120,11 +119,17 @@ void main()
 			cout << "Received message:  " << recvbuffer << endl;
 		}
 		else if (received == 0)cout << "Connection closed" << endl;
+		
 		else cout << "Receive failed with error #" << WSAGetLastError() << endl;
-		//} while (received > 0);
+		
+		if (strcmp(recvbuffer, "No free connections left") == 0)
+		{
+			cout << recvbuffer << endl;
+			break;
+		}
+		
 		if (!exit)
 		{
-			//sendbuffer[0] = 0;
 			ZeroMemory(sendbuffer, BUFFER_SIZE);
 			cout << "Введите сообщение: ";
 			cin.getline(sendbuffer, BUFFER_SIZE);
