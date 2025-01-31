@@ -162,7 +162,7 @@ void main()
 			cout << ClientSocketData(client_socket).get_socket(sz_client_name) << "was disconnected" << endl;
 			closesocket(extra_socket);
 		}
-
+		Sleep(100);
 	} while (true);
 
 	system("PAUSE");
@@ -236,4 +236,16 @@ void HandleClient(LPVOID lParam)
 		cout << "shutdown failed with error #" << WSAGetLastError() << endl;
 	}
 	closesocket(client_sockets[i]);
+}
+
+void PrintNumberClients()
+{
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+	ZeroMemory(&consoleInfo, sizeof(consoleInfo));
+	GetConsoleScreenBufferInfo(hConsole, &consoleInfo);
+	SetConsoleCursorPosition(hConsole, COORD{ 85, 0 });
+	cout << "Количество клиентов: " << number_of_clients << endl;
+
+	SetConsoleCursorPosition(hConsole, consoleInfo.dwCursorPosition);
 }
