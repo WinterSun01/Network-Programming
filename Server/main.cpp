@@ -125,7 +125,6 @@ void main()
 	//5. Accept connections:
 	do
 	{
-		//number_of_clients = 0;
 		CHAR sz_client_name[32];
 		int namelen = 32;
 		SOCKADDR client_socket;
@@ -137,7 +136,7 @@ void main()
 			*client_number[number_of_clients] = number_of_clients;
 
 			client_sockets[number_of_clients] = accept(ListenSocket, &client_socket, &namelen);
-			//ClientSocket = accept(ListenSocket, &client_socket, &namelen);
+
 			if (ClientSocket == INVALID_SOCKET)
 			{
 				cout << "Accept failed with error #" << WSAGetLastError() << endl;
@@ -145,8 +144,6 @@ void main()
 				//WSACleanup();
 				//return;
 			}
-
-			//HandleClient(ClientSocket);
 
 			client_handles[number_of_clients] = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)HandleClient, client_number[number_of_clients], 0, 0);
 			number_of_clients++;
@@ -160,9 +157,9 @@ void main()
 			send(extra_socket, message, sizeof(message), 0);
 			shutdown(extra_socket, SD_BOTH);
 			closesocket(extra_socket);
-			cout << ClientSocketData(client_socket).get_socket(sz_client_name) << "was disconnected" << endl;
+			cout << ClientSocketData(client_socket).get_socket(sz_client_name) << " was disconnected" << endl;
 		}
-		Sleep(100);
+
 	} while (true);
 
 	system("PAUSE");
@@ -207,14 +204,11 @@ void HandleClient(LPVOID lParam)
 		{
 			cout << "Bytes received:  \t" << received << endl;
 			cout << "Message from " << sz_client_name << ":\t" << recvbuffer << endl;
-			//cout << "Received message:\t" << recvbuffer << endl;
 			int iSendResult = send(client_sockets[i], recvbuffer, received, 0);
-			//int iSendResult = send(ClientSocket, "Привет Client", received, 0);
 			if (iSendResult == SOCKET_ERROR)
 			{
 				cout << "Send failed with error #" << WSAGetLastError() << endl;
 				closesocket(client_sockets[i]);
-				//WSACleanup();
 				return;
 			}
 			cout << "Bytes sent: " << iSendResult << endl;
@@ -224,8 +218,6 @@ void HandleClient(LPVOID lParam)
 		{
 			cout << "Receive failed with error #" << WSAGetLastError() << endl;
 			closesocket(client_sockets[i]);
-			//WSACleanup();
-			//return;
 		}
 	} while (received > 0);
 
@@ -236,16 +228,4 @@ void HandleClient(LPVOID lParam)
 		cout << "shutdown failed with error #" << WSAGetLastError() << endl;
 	}
 	closesocket(client_sockets[i]);
-}
-
-void PrintNumberClients()
-{
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
-	ZeroMemory(&consoleInfo, sizeof(consoleInfo));
-	GetConsoleScreenBufferInfo(hConsole, &consoleInfo);
-	SetConsoleCursorPosition(hConsole, COORD{ 85, 0 });
-	cout << "Количество клиентов: " << number_of_clients << endl;
-
-	SetConsoleCursorPosition(hConsole, consoleInfo.dwCursorPosition);
 }
